@@ -1,0 +1,41 @@
+---
+title: 'автомобили'
+date: '06.06.2018'
+output:
+  html_document:
+    keep_md: no
+    number_sections: yes
+    toc: yes
+lang: ru-RU
+editor_options:
+  chunk_output_type: console
+---
+
+Подключаем пакет `tidyverse`, `rio` и `skimr`!
+
+```{r}
+library(tidyverse)
+library(rio)
+library(skimr)
+```
+
+
+Определение количества машин в Регионе
+```{r}
+CFO <- import('CFO.xlsx')
+export(CFO, "CFO.rds")
+head(CFO)
+a1 <- table(CFO$"Регион", CFO$"Количество единиц т/с") # строим таблицу сопряженности
+a2 <- as.data.frame(a1) 
+glimpse(a2)
+a2$Var2 = as.numeric(a2$Var2) #преобразование факторной переменной в числовую
+a3 <- as.data.frame(a2)
+glimpse(a2)
+#a2$new_column <- a2$Var2 * a2$Freq
+#a4 <- as.data.frame(a2)
+#a5 <- group_by(a4, Var1) %>% summarise(car = sum(new_column))
+export(a5, "CFOregion.xlsx")
+
+```
+
+
